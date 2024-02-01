@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import SideNav from "./components/SideNav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +12,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="bg-[#F7F8FA] min-h-screen flex w-full">
+          <div className=" flex-1 flex flex-col-reverse lg:flex-row  space-y-5 lg:space-y-0  lg:space-x-10 p-0 lg:p-6 my-0 lg:my-2 mx-0 lg:mx-4 lg:rounded-2xl">
+            {/* <!-- Side Navigation --> */}
+            <SideNav />
+            <div className="flex-1 px-2 sm:px-0">
+              {children}
+            </div>
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

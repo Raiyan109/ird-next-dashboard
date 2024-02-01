@@ -11,7 +11,7 @@ import support from '../../public/I want to support.png'
 
 const SideNav = () => {
     return (
-        <div class="bg-white px-2 lg:px-4 py-2 lg:py-10 sm:rounded-xl flex lg:flex-col justify-between">
+        <div class="bg-white px-2 lg:px-4 py-2 lg:py-10  flex lg:flex-col justify-between rounded-t-[60px] lg:rounded-xl z-10">
             <nav class="flex items-center flex-row lg:flex-col lg:space-y-2 gap-2 lg:gap-4">
                 <Image src={logo} width={80} />
                 {/* <!-- Active: bg-gray-800 text-white, Not active: text-white/50 --> */}
