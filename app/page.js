@@ -1,11 +1,10 @@
-
-
 import Image from "next/image";
 import SideNav from "./components/SideNav";
 import people from '../public/profile 1.png'
 import lang from '../public/language.png'
 import stack from '../public/stack.png'
 import menu from '../public/54-menu-2.png'
+import fever from '../public/005-fever.png'
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
@@ -18,11 +17,30 @@ async function getCategories() {
   return data
 }
 
+async function getOnlyCategories() {
+  const res = await fetch('http://localhost:3000/api/onlyCat')
+  const data = await res.json()
+  return data
+}
+
+async function getNestedCategories() {
+  const res = await fetch('http://localhost:3000/api/nestedCat')
+  const data = await res.json()
+  return data
+}
+
 export default async function Home() {
   const categories = await getCategories()
   const result = categories.categories
-  console.log(typeof categories.categories);
-  console.log(categories.categories);
+
+
+  const onlyCat = await getOnlyCategories()
+  const onlyCatResult = onlyCat.onlyCategories
+
+
+  const nestedCat = await getNestedCategories()
+  const nestedCatResult = nestedCat.nestedCategories
+  console.log(nestedCatResult);
   return (
     <div>
       {/* <!-- component --> */}
@@ -72,6 +90,27 @@ export default async function Home() {
                 <div className="border-gray-200 py-5 px-3 w-72 h-10 border my-5 flex items-center justify-start gap-5 rounded-md">
                   <IoSearchOutline />
                   <input type="text" placeholder="Search Categories" className="text-md" />
+                </div>
+                <div className="space-y-4">
+                  {nestedCatResult.map(result => (
+                    <div key={result._id} className="flex items-center gap-3 bg-ash py-3 px-4 rounded-xl">
+                      <Image src={fever} alt={result.cat_icon} />
+                      <div className="flex flex-col">
+                        <div className="text-lg">{result.cat_name_en}</div>
+                        <div className="text-xs">Subcategory: {result.no_of_subcat}</div>
+                      </div>
+                      <div>{result.subcats.map(item => (
+                        <div>
+                          <div>{item.name}</div>
+                          <div>{item.subcats_of_subcats.map(i => (
+                            <div>
+                              <h1>{i.name}</h1>
+                            </div>
+                          ))}</div>
+                        </div>
+                      ))}</div>
+                    </div>
+                  ))}
                 </div>
               </ul>
             </div>
