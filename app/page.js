@@ -1,3 +1,5 @@
+
+
 import Image from "next/image";
 import SideNav from "./components/SideNav";
 import people from '../public/profile 1.png'
@@ -8,7 +10,19 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
 
-export default function Home() {
+import axios from "axios";
+
+async function getCategories() {
+  const res = await fetch('http://localhost:3000/api/categories')
+  const data = await res.json()
+  return data
+}
+
+export default async function Home() {
+  const categories = await getCategories()
+  const result = categories.categories
+  console.log(typeof categories.categories);
+  console.log(categories.categories);
   return (
     <div>
       {/* <!-- component --> */}
@@ -30,11 +44,7 @@ export default function Home() {
 
         </div>
         <div className="inline-flex items-center space-x-5">
-          <a className="bg-gray-900 text-white/50 p-2 rounded-md hover:text-white smooth-hover" href="#">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-            </svg>
-          </a>
+
           <Image src={people} />
           <div className="drawer-content flex flex-col items-center justify-center cursor-pointer">
             {/* Page content here */}
@@ -48,7 +58,7 @@ export default function Home() {
       </div>
       {/* Body Cards */}
       <div className="flex">
-        <div className="mb-10 sm:mb-0 mt-10 flex justify-center items-center gap-10 flex-3">
+        <div className="mb-10 sm:mb-0 mt-10 flex  gap-10 flex-3">
           <div className="drawer lg:drawer-open flex-1">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
 
@@ -64,6 +74,18 @@ export default function Home() {
                   <input type="text" placeholder="Search Categories" className="text-md" />
                 </div>
               </ul>
+            </div>
+          </div>
+
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {
+                result.map((category) => (
+                  <div key={category._id}>
+                    <h1>{category.dua_name_en}</h1>
+                  </div>
+                ))
+              }
             </div>
           </div>
         </div>
