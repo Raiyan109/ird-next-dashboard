@@ -21,7 +21,7 @@ export async function POST(req) {
 export async function GET() {
     try {
         const nestedCategories = await NestedCat.find({})
-        console.log(nestedCategories);
+        console.log(nestedCategories, 'from route.js 24');
         return NextResponse.json({ nestedCategories }, { status: 200 })
     } catch (error) {
         console.log(error);

@@ -21,7 +21,7 @@ export async function POST(req) {
 export async function GET() {
     try {
         const onlyCategories = await OnlyCat.find({})
-        console.log(onlyCategories);
+        // console.log(onlyCategories);
         return NextResponse.json({ onlyCategories }, { status: 200 })
     } catch (error) {
         console.log(error);

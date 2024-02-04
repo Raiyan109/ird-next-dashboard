@@ -4,43 +4,46 @@ import people from '../public/profile 1.png'
 import lang from '../public/language.png'
 import stack from '../public/stack.png'
 import menu from '../public/54-menu-2.png'
-import fever from '../public/005-fever.png'
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaBars } from "react-icons/fa6";
 import { IoSearchOutline } from "react-icons/io5";
 
 import axios from "axios";
+import SubCat from "./components/SubCat";
+import Categories from "./components/Categories";
+import Duas from "./components/Duas";
 
-async function getCategories() {
-  const res = await fetch('http://localhost:3000/api/categories')
-  const data = await res.json()
-  return data
-}
+// async function getCategories() {
+//   const res = await fetch('http://localhost:3000/api/categories')
+//   const data = await res.json()
+//   return data
+// }
 
-async function getOnlyCategories() {
-  const res = await fetch('http://localhost:3000/api/onlyCat')
-  const data = await res.json()
-  return data
-}
+// async function getOnlyCategories() {
+//   const res = await fetch('http://localhost:3000/api/onlyCat')
+//   const data = await res.json()
+//   return data
+// }
 
 async function getNestedCategories() {
-  const res = await fetch('http://localhost:3000/api/nestedCat')
+  const res = await fetch('http://localhost:3000/api/nestedCat', { cache: 'no-store' })
+
   const data = await res.json()
   return data
 }
 
 export default async function Home() {
-  const categories = await getCategories()
-  const result = categories.categories
+  // const categories = await getCategories()
+  // const result = categories.categories
 
 
-  const onlyCat = await getOnlyCategories()
-  const onlyCatResult = onlyCat.onlyCategories
+  // const onlyCat = await getOnlyCategories()
+  // const onlyCatResult = onlyCat.onlyCategories
 
 
   const nestedCat = await getNestedCategories()
   const nestedCatResult = nestedCat.nestedCategories
-  console.log(nestedCatResult);
+
   return (
     <div>
       {/* <!-- component --> */}
@@ -93,23 +96,7 @@ export default async function Home() {
                 </div>
                 <div className="space-y-4">
                   {nestedCatResult.map(result => (
-                    <div key={result._id} className="flex items-center gap-3 bg-ash py-3 px-4 rounded-xl">
-                      <Image src={fever} alt={result.cat_icon} />
-                      <div className="flex flex-col">
-                        <div className="text-lg">{result.cat_name_en}</div>
-                        <div className="text-xs">Subcategory: {result.no_of_subcat}</div>
-                      </div>
-                      <div>{result.subcats.map(item => (
-                        <div>
-                          <div>{item.name}</div>
-                          <div>{item.subcats_of_subcats.map(i => (
-                            <div>
-                              <h1>{i.name}</h1>
-                            </div>
-                          ))}</div>
-                        </div>
-                      ))}</div>
-                    </div>
+                    <Categories result={result} id={result._id} key={result._id} />
                   ))}
                 </div>
               </ul>
@@ -118,13 +105,15 @@ export default async function Home() {
 
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {
+              {/* {
                 result.map((category) => (
                   <div key={category._id}>
                     <h1>{category.dua_name_en}</h1>
                   </div>
                 ))
-              }
+              } */}
+
+              {/* <Duas /> */}
             </div>
           </div>
         </div>
