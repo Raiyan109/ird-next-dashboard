@@ -26,7 +26,7 @@ import Duas from "./components/Duas";
 // }
 
 async function getNestedCategories() {
-  const res = await fetch('http://localhost:3000/api/nestedCat', { cache: 'no-store' })
+  const res = await fetch('https://ird-next-dashboard.vercel.app/api/nestedCat', { cache: 'no-store' })
 
   const data = await res.json()
   return data
